@@ -10,14 +10,14 @@ if [ -e linux-src ]; then
    git checkout -- .
    cd ..
 else
-   git clone --depth=1 -b rpi-4.14.y https://github.com/raspberrypi/linux.git linux-src
+   git clone --depth=1 -b rpi-4.20.y https://github.com/raspberrypi/linux.git linux-src
 fi
 
 cd linux-src
 
-cp ../../make/kernel-config.txt ./.config
+# cp ../../make/kernel-config.txt ./.config
 
-make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bcmrpi3_defconfig
 
 make -j $(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
 
