@@ -4,7 +4,14 @@ set -ex
 
 mkdir -p build && cd build
 
-git clone --depth=1 -b rpi-4.11.y https://github.com/raspberrypi/linux.git linux-src
+if [ -e linux-src ]; then
+   cd linux-src
+   git clean -dff .
+   git checkout -- .
+   cd ..
+else
+   git clone --depth=1 -b rpi-4.14.y https://github.com/raspberrypi/linux.git linux-src
+fi
 
 cd linux-src
 
@@ -13,3 +20,5 @@ cp ../../make/kernel-config.txt ./.config
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
 
 make -j $(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+
+touch ../.linux-src

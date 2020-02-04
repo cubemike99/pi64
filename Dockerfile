@@ -1,6 +1,10 @@
-FROM ubuntu:17.10
+FROM ubuntu:18.04
 
-ENV GOPATH=/go PATH=/go/bin:/usr/lib/go-1.8/bin:$PATH
+ENV http_proxy=http://192.168.1.57:8080/ https_proxy=http://192.168.1.57:8080/
+
+ENV APP_PATH /root/pi64
+WORKDIR $APP_PATH
+ENV GOPATH=$APP_PATH/go PATH=$APP_PATH/go/bin:/usr/lib/go-1.10/bin:$PATH
 
 RUN apt-get update \
     && apt-get -y install \
@@ -18,17 +22,12 @@ RUN apt-get update \
         wget \
         dosfstools \
         kpartx \
-        golang-1.8-go \
+        golang-1.10-go \
         rsync \
+        kmod \
+        bison \
+        flex \
+        libssl-dev \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && go get \
-        github.com/aktau/github-release \
-        github.com/cheggaaa/pb \
-        golang.org/x/crypto/openpgp
+    && rm -rf /var/lib/apt/lists/*
 
-WORKDIR $GOPATH/src/github.com/bamarni/pi64
-
-COPY . $GOPATH/src/github.com/bamarni/pi64
-
-RUN go install github.com/bamarni/pi64/cmd/pi64-build

@@ -4,8 +4,17 @@ set -ex
 
 cd build
 
-git clone --depth=1 https://github.com/raspberrypi/firmware
+if [ -e firmware ]; then
+   cd firmware
+   git clean -dff .
+   git checkout -- .
+   cd ..
+else
+   git clone --depth=1 https://github.com/raspberrypi/firmware
+fi
 
 cd firmware/boot
 
 rm {*.dtb,*.img}
+
+touch ../../.firmware

@@ -28,7 +28,10 @@ rsync -a linux/ root-$version/
 
 # https://github.com/RPi-Distro/repo/issues/51
 mkdir -p root-$version/lib/firmware/brcm
-wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm80211/brcm/brcmfmac43430-sdio.txt
+wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43430-sdio.txt
+wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43455-sdio.bin
+wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43455-sdio.clm_blob
+wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43455-sdio.txt
 `)
 	if out, err := script.CombinedOutput(); err != nil {
 		fmt.Fprintln(os.Stderr, string(out))
@@ -40,13 +43,13 @@ wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/firmware-n
 	if debug {
 		logLevel = 7
 	}
-	cmdLine := fmt.Sprintf("dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait loglevel=%d net.ifnames=0 init=/usr/bin/pi64-config", logLevel)
+	cmdLine := fmt.Sprintf("dwc_otg.lpm_enable=0 console=ttyAMA0,115200 console=ttyAMA0 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait loglevel=%d net.ifnames=0 init=/usr/bin/pi64-config", logLevel)
 	if err := ioutil.WriteFile(bootDir+"/cmdline.txt", []byte(cmdLine), 0644); err != nil {
 		return err
 	}
 
 	fmt.Fprintln(os.Stderr, "   Creating /boot/config.txt...")
-	if err := ioutil.WriteFile(bootDir+"/config.txt", []byte("dtparam=audio=on"), 0644); err != nil {
+	if err := ioutil.WriteFile(bootDir+"/config.txt", []byte("dtparam=audio=on\n\"kernel=kernel8.img\"\ndtoverlay=pi3-disable-bt"), 0644); err != nil {
 		return err
 	}
 
