@@ -17,8 +17,8 @@ cd linux-src
 
 cp ../../make/kernel-config.txt ./.config
 
-make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- olddefconfig
 
-make -j $(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+make -j $(nproc) ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-
 
 touch ../.linux-src

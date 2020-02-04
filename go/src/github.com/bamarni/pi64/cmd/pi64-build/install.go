@@ -58,7 +58,7 @@ func installDebian() error {
 	}
 	multistrapOpts := multistrap.Options{
 		Directory:  rootDir,
-		Arch:       "arm64",
+		Arch:       "armhf",
 		Suite:      "stretch",
 		Components: []string{"main", "contrib", "non-free"},
 		Packages:   packages,
@@ -68,7 +68,7 @@ func installDebian() error {
 	}
 
 	fmt.Fprintln(os.Stderr, "   Cleaning APT...")
-	if err := exec.Command("cp", "/usr/bin/qemu-aarch64-static", rootDir+"/usr/bin/qemu-aarch64-static").Run(); err != nil {
+	if err := exec.Command("cp", "/usr/bin/qemu-arm-static", rootDir+"/usr/bin/qemu-arm-static").Run(); err != nil {
 		return err
 	}
 
@@ -78,7 +78,7 @@ func installDebian() error {
 	}
 	defer exit()
 
-	aptClean := exec.Command("/usr/bin/qemu-aarch64-static", "/usr/bin/apt-get", "clean")
+	aptClean := exec.Command("/usr/bin/qemu-arm-static", "/usr/bin/apt-get", "clean")
 	aptClean.Stdin = ioutil.NopCloser(bytes.NewReader(nil))
 	aptClean.Stdout, aptClean.Stderr = ioutil.Discard, ioutil.Discard
 	aptClean.Dir = "/"
@@ -102,7 +102,7 @@ deb-src http://security.debian.org/ stretch/updates main contrib non-free
 	}
 
 	// cf. https://github.com/bamarni/pi64/issues/8
-	if err := exec.Command("/usr/bin/qemu-aarch64-static", "/usr/bin/dpkg-query", "--list").Run(); err != nil {
+	if err := exec.Command("/usr/bin/qemu-arm-static", "/usr/bin/dpkg-query", "--list").Run(); err != nil {
 		return err
 	}
 
@@ -153,7 +153,7 @@ iface wlan0 inet manual
 		return err
 	}
 
-	return os.Remove("/usr/bin/qemu-aarch64-static")
+	return os.Remove("/usr/bin/qemu-arm-static")
 }
 
 func saveSigningKeys() error {
