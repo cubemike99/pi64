@@ -1,6 +1,5 @@
 FROM ubuntu:18.04
 
-ENV http_proxy=http://192.168.1.57:8080/ https_proxy=http://192.168.1.57:8080/
 
 ENV APP_PATH /root/pi64
 WORKDIR $APP_PATH
