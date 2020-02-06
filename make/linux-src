@@ -6,7 +6,8 @@ mkdir -p build && cd build
 
 if [ -e linux-src ]; then
    cd linux-src
-   git clean -dfx .
+#   git clean -dfx .
+   git clean -dff .
    git checkout -- .
    cd ..
 else
@@ -15,14 +16,16 @@ fi
 
 cd linux-src
 
-cp ../../make/kernel-config.txt ./.config
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bcmrpi_defconfig
 
-make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bcmrpi3_defconfig
+# sed -iE 's/\(CONFIG_CRYPTO\)\w+=m/\1=y/' .config
 
-patch < ../../make/crypto_m_to_y.patch
+# make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- LSMOD=../../make/raspi_lsmod.txt localmodconfig
 
-make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LSMOD=../../make/raspi_lsmod.txt localmodconfig
+# sed -i 's/ CONFIG_DEBUG_LL .*/CONFIG_DEBUG_LL=y/' .config
+# echo CONFIG_DEBUG_BCM2835=y >> ./.config
+# echo CONFIG_EARLY_PRINTK=y >> ./.config
 
-make -j $(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+make -j $(nproc) ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-
 
 touch ../.linux-src

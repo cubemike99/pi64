@@ -2,32 +2,34 @@
 
 set -ex
 
-rm -r build/linux
+if [ -e build/linux ]; then
+   rm -r build/linux
+fi
 
 cd build/linux-src
 
 mkdir -p ../linux/boot ../linux/usr/bin ../linux/opt
 
-cp arch/arm64/boot/Image ../linux/boot/kernel8.img
-cp arch/arm64/boot/dts/broadcom/bcm2710-rpi-3-b-plus.dtb ../linux/boot
-make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- INSTALL_MOD_PATH=$(dirname $PWD)/linux modules_install
-make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- INSTALL_HDR_PATH=$(dirname $PWD)/linux/usr headers_install
+cp arch/arm/boot/Image ../linux/boot/kernel7.img
+cp arch/arm/boot/dts/bcm2708-rpi-zero-w.dtb ../linux/boot
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- INSTALL_MOD_PATH=$(dirname $PWD)/linux modules_install
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- INSTALL_HDR_PATH=$(dirname $PWD)/linux/usr headers_install
 
-kernelversion=$(make -s kernelversion)-v8+
+kernelversion=$(make -s kernelversion)+
 hdr_dir=linux-headers-${kernelversion}
 
 echo "./.config" >../hdr_files
 find . -name Makefile\* -o -name Kconfig\* -o -name \*.pl >>../hdr_files
-find arch/arm64/include include scripts -type f >>../hdr_files
-find arch/arm64 -name module.lds -o -name Kbuild.platforms -o -name Platform>>../hdr_files
+find arch/arm/include include scripts -type f >>../hdr_files
+find arch/arm -name module.lds -o -name Kbuild.platforms -o -name Platform>>../hdr_files
 
-find $(find arch/arm64 -name include -o -name scripts -type d) -type f>>../hdr_files
+find $(find arch/arm -name include -o -name scripts -type d) -type f>>../hdr_files
 
 if grep -q '^CONFIG_STACK_VALIDATION=y' .config ; then
 	find tools/objtool -type f -executable>>../hdr_files
 fi
 
-find arch/arm64/include Module.symvers include scripts -type f>>../hdr_files
+find arch/arm/include Module.symvers include scripts -type f>>../hdr_files
 
 if grep -q '^CONFIG_GCC_PLUGINS=y' .config ; then
 	find scripts/gcc-plugins -name \*.so -o -name gcc-common.h>>../hdr_files
@@ -41,10 +43,12 @@ rsync -a --files-from=../hdr_files ./ ../linux/usr/src/$hdr_dir
 cd ..
 
 
-GOOS=linux GOARCH=arm64 go build -o ./linux/usr/bin/pi64-update github.com/bamarni/pi64/cmd/pi64-update
-GOOS=linux GOARCH=arm64 go build -o ./linux/usr/bin/pi64-config github.com/bamarni/pi64/cmd/pi64-config
+GOOS=linux GOARCH=arm go build -o ./linux/usr/bin/pi64-update github.com/bamarni/pi64/cmd/pi64-update
+GOOS=linux GOARCH=arm go build -o ./linux/usr/bin/pi64-config github.com/bamarni/pi64/cmd/pi64-config
 
 cp -R /opt/vc linux/opt/
 mv linux/opt/vc/bin/* linux/usr/bin/
 
 cp -R firmware/boot/* linux/boot
+
+touch .linux

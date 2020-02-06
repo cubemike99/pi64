@@ -1,5 +1,8 @@
 FROM ubuntu:18.04
 
+ENV http_proxy http://192.168.1.57:8080/ 
+ENV https_proxy http://192.168.1.57:8080/
+
 
 ENV APP_PATH /root/pi64
 WORKDIR $APP_PATH
@@ -11,8 +14,8 @@ RUN apt-get update \
         build-essential \
         cmake \
         device-tree-compiler \
-        gcc-aarch64-linux-gnu \
-        g++-aarch64-linux-gnu \
+        gcc-arm-linux-gnueabihf \
+        g++-arm-linux-gnueabihf \
         git \
         unzip \
         qemu-user-static \

@@ -28,10 +28,9 @@ rsync -a linux/ root-$version/
 
 # https://github.com/RPi-Distro/repo/issues/51
 mkdir -p root-$version/lib/firmware/brcm
+wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43430-sdio.bin
+wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43430-sdio.clm_blob
 wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43430-sdio.txt
-wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43455-sdio.bin
-wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43455-sdio.clm_blob
-wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43455-sdio.txt
 wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/bluez-firmware/raw/master/broadcom/BCM43430A1.hcd
 wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/bluez-firmware/raw/master/broadcom/BCM4345C0.hcd
 `)
@@ -51,7 +50,7 @@ wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/bluez-firm
 	}
 
 	fmt.Fprintln(os.Stderr, "   Creating /boot/config.txt...")
-	if err := ioutil.WriteFile(bootDir+"/config.txt", []byte("dtparam=audio=on\n\"kernel=kernel8.img\"\ncpu_freq=1444\nforce_turbo=1\nenable_uart=1\n"), 0644); err != nil {
+	if err := ioutil.WriteFile(bootDir+"/config.txt", []byte("dtparam=audio=on\n\"kernel=kernel7.img\"\ncpu_freq=1000\nforce_turbo=1\nenable_uart=1\n"), 0644); err != nil {
 		return err
 	}
 
