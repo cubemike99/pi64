@@ -2,6 +2,8 @@
 
 set -ex
 
+rm -r build/linux
+
 cd build/linux-src
 
 mkdir -p ../linux/boot ../linux/usr/bin ../linux/opt

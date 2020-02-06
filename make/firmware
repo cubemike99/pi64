@@ -6,7 +6,7 @@ cd build
 
 if [ -e firmware ]; then
    cd firmware
-   git clean -dff .
+   git clean -dfx .
    git checkout -- .
    cd ..
 else

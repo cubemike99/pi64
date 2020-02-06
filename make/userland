@@ -4,7 +4,14 @@ set -ex
 
 mkdir -p build && cd build
 
-git clone --depth=1 https://github.com/raspberrypi/userland
+if [ -e userland ]; then
+   cd userland
+   git clean -dfx .
+   git checkout -- .
+   cd ..
+else
+   git clone --depth=1 https://github.com/raspberrypi/userland
+fi
 
 rm -rf ./userland/build && mkdir -p ./userland/build
 
@@ -13,3 +20,5 @@ cd ./userland/build
 cmake -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_BUILD_TYPE=release -DARM64=ON -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++ -DCMAKE_ASM_COMPILER=aarch64-linux-gnu-gcc -DVIDEOCORE_BUILD_DIR=/opt/vc ../
 
 make -j $(nproc)
+
+touch ../../.userland
