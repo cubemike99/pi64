@@ -1,0 +1,43 @@
+Module                  Size  Used by
+sg                     32768  0
+uas                    24576  0
+bnep                   24576  2
+rfcomm                 53248  7
+hci_uart               40960  1
+btbcm                  16384  1 hci_uart
+serdev                 24576  1 hci_uart
+bluetooth             401408  29 hci_uart,btbcm,bnep,rfcomm
+8021q                  32768  0
+garp                   20480  1 8021q
+ecdh_generic           28672  1 bluetooth
+stp                    16384  1 garp
+llc                    16384  2 stp,garp
+brcmfmac              241664  0
+brcmutil               16384  1 brcmfmac
+bcm2835_codec          45056  0
+bcm2835_v4l2           45056  0
+v4l2_mem2mem           24576  1 bcm2835_codec
+sha256_generic         20480  0
+bcm2835_mmal_vchiq     28672  2 bcm2835_codec,bcm2835_v4l2
+videobuf2_dma_contig    20480  1 bcm2835_codec
+videobuf2_vmalloc      16384  1 bcm2835_v4l2
+videobuf2_memops       16384  2 videobuf2_vmalloc,videobuf2_dma_contig
+videobuf2_v4l2         24576  3 bcm2835_codec,bcm2835_v4l2,v4l2_mem2mem
+videobuf2_common       53248  4 bcm2835_codec,videobuf2_v4l2,bcm2835_v4l2,v4l2_mem2mem
+cfg80211              704512  1 brcmfmac
+v4l2_common            16384  1 bcm2835_v4l2
+videodev              237568  6 bcm2835_codec,v4l2_common,videobuf2_v4l2,bcm2835_v4l2,videobuf2_common,v4l2_mem2mem
+media                  36864  3 videodev,bcm2835_codec,v4l2_mem2mem
+rfkill                 28672  6 bluetooth,cfg80211
+vc_sm_cma              36864  1 bcm2835_mmal_vchiq
+snd_bcm2835            28672  0
+snd_pcm               118784  1 snd_bcm2835
+snd_timer              36864  1 snd_pcm
+sdhci_iproc            16384  0
+snd                    77824  3 snd_bcm2835,snd_timer,snd_pcm
+vchiq                 327680  3 vc_sm_cma,snd_bcm2835,bcm2835_mmal_vchiq
+uio_pdrv_genirq        16384  0
+uio                    20480  1 uio_pdrv_genirq
+ip_tables              28672  0
+x_tables               36864  1 ip_tables
+ipv6                  462848  36

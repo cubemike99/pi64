@@ -19,6 +19,10 @@ cp ../../make/kernel-config.txt ./.config
 
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bcmrpi3_defconfig
 
+patch < ../../make/crypto_m_to_y.patch
+
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LSMOD=../../make/raspi_lsmod.txt localmodconfig
+
 make -j $(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
 
 touch ../.linux-src
