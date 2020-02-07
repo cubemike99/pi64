@@ -29,7 +29,7 @@ var (
 		"ca-certificates",
 
       // User packages
-      "vim", "lsof", "pciutils", "usbutils", "lshw", "wget", "ca-certificates", "g++", "make", "bluetooth", "bluez", "git",
+      "vim", "lsof", "pciutils", "usbutils", "lshw", "wget", "ca-certificates", "g++", "make", "bluetooth", "bluez", "git", "strace", "file",
 	}
 	litePackages    = []string{"ssh", "avahi-daemon"}
 	desktopPackages = []string{"task-lxde-desktop"}
@@ -58,7 +58,7 @@ func installDebian() error {
 	}
 	multistrapOpts := multistrap.Options{
 		Directory:  rootDir,
-		Arch:       "armel",
+		Arch:       "armhf",
 		Suite:      "buster",
 		Components: []string{"main", "contrib", "non-free"},
 		Packages:   packages,
@@ -87,14 +87,14 @@ func installDebian() error {
 	}
 
 	aptSources := []byte(`
-deb http://deb.debian.org/debian buster main contrib non-free
-deb-src http://deb.debian.org/debian buster main contrib non-free
+deb http://archive.raspbian.org/raspbian buster main contrib non-free
+deb-src http://archive.raspbian.org/raspbian buster main contrib non-free
 
-deb http://deb.debian.org/debian buster-updates main contrib non-free
-deb-src http://deb.debian.org/debian buster-updates main contrib non-free
+deb http://archive.raspbian.org/raspbian buster-updates main contrib non-free
+deb-src http://archive.raspbian.org/raspbian buster-updates main contrib non-free
 
-deb http://security.debian.org/ buster/updates main contrib non-free
-deb-src http://security.debian.org/ buster/updates main contrib non-free
+deb http://security.raspbian.org/ buster/updates main contrib non-free
+deb-src http://security.raspbian.org/ buster/updates main contrib non-free
 `)
 
 	if err := ioutil.WriteFile("/etc/apt/sources.list", aptSources[1:], 0644); err != nil {

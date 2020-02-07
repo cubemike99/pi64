@@ -6,8 +6,7 @@ mkdir -p build && cd build
 
 if [ -e linux-src ]; then
    cd linux-src
-#   git clean -dfx .
-   git clean -dff .
+   git clean -dfx .
    git checkout -- .
    cd ..
 else

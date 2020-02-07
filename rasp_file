@@ -1,0 +1,14 @@
+[General]
+noauth=false
+unpack=true
+allowrecommends=true
+debootstrap=Debian
+aptsources=Debian
+arch=armhf
+
+[Debian]
+source=http://archive.raspbian.org/raspbian/
+keyring=
+components=main contrib nonfree 
+suite=buster
+packages=apt

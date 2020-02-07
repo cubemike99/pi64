@@ -13,12 +13,10 @@ else
    git clone --depth=1 https://github.com/raspberrypi/userland
 fi
 
-rm -rf ./userland/build && mkdir -p ./userland/build
+cd userland
 
-cd ./userland/build
-
-cmake -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_BUILD_TYPE=release -DCMAKE_C_COMPILER=arm-linux-gnueabihf-gcc -DCMAKE_CXX_COMPILER=arm-linux-gnueabihf-g++ -DCMAKE_ASM_COMPILER=arm-linux-gnueabihf-gcc -DVIDEOCORE_BUILD_DIR=/opt/vc ../
+cmake -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_BUILD_TYPE=release -DCMAKE_C_COMPILER=arm-linux-gnueabihf-gcc -DCMAKE_CXX_COMPILER=arm-linux-gnueabihf-g++ -DCMAKE_ASM_COMPILER=arm-linux-gnueabihf-gcc -DCMAKE_C_FLAGS="-march=armv6z -mtune=arm1176jzf-s -mfpu=vfp -mfloat-abi=hard" -DCMAKE_CXX_FLAGS="-march=armv6z -mtune=arm1176jzf-s -mfpu=vfp -mfloat-abi=hard"
 
 make -j $(nproc)
 
-touch ../../.userland
+touch ../.userland

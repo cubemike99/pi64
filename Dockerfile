@@ -14,8 +14,6 @@ RUN apt-get update \
         build-essential \
         cmake \
         device-tree-compiler \
-        gcc-arm-linux-gnueabihf \
-        g++-arm-linux-gnueabihf \
         git \
         unzip \
         qemu-user-static \
