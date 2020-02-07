@@ -37,6 +37,9 @@ func Finish() {
 		checkError(addPiUser())
 	}
 
+    fmt.Println("Configuring systemd...")
+    checkError(configureSystemd())
+
 	fmt.Println("Self-removing from init...")
 	checkError(removeInit())
 
@@ -148,4 +151,15 @@ func removeInit() error {
 	}
 	newLine := bytes.Replace(line, []byte("init=/usr/bin/pi64-config"), nil, 1)
 	return ioutil.WriteFile(path, newLine, 0)
+}
+
+func configureSystemd() error {
+    if err := runCommand("/bin/ln", "-s", "/lib/systemd/system/bcm43438.service", "/etc/systemd/system/multi-user.target.wants/bcm43438.service"); err != nil {
+        return err
+    }
+    if err := runCommand("/bin/ln", "-s", "/lib/systemd/system/rfcomm.service", "/etc/systemd/system/multi-user.target.wants/rfcomm.service"); err != nil {
+        return err
+    }
+    err := runCommand("ls")
+    return err
 }

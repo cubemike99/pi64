@@ -1,0 +1,42 @@
+8021q                  32768  0
+bcm2835_codec          36864  0
+bcm2835_mmal_vchiq     32768  2 bcm2835_codec,bcm2835_v4l2
+bcm2835_v4l2           45056  0
+bluetooth             405504  29 hci_uart,bnep,btbcm,rfcomm
+bnep                   20480  2
+brcmfmac              290816  0
+brcmutil               16384  1 brcmfmac
+btbcm                  16384  1 hci_uart
+cfg80211              638976  1 brcmfmac
+ecdh_generic           28672  1 bluetooth
+fixed                  16384  0
+garp                   16384  1 8021q
+hci_uart               40960  1
+hwmon                  16384  1 raspberrypi_hwmon
+ip_tables              24576  0
+ipv6                  446464  30
+llc                    16384  2 garp,stp
+media                  36864  3 bcm2835_codec,videodev,v4l2_mem2mem
+Module                  Size  Used by
+raspberrypi_hwmon      16384  0
+rfcomm                 53248  7
+rfkill                 28672  6 bluetooth,cfg80211
+serdev                 20480  1 hci_uart
+sha256_generic         20480  0
+snd                    69632  3 snd_timer,snd_bcm2835,snd_pcm
+snd_bcm2835            24576  0
+snd_pcm                98304  1 snd_bcm2835
+snd_timer              32768  1 snd_pcm
+stp                    16384  1 garp
+uio                    20480  1 uio_pdrv_genirq
+uio_pdrv_genirq        16384  0
+v4l2_common            16384  1 bcm2835_v4l2
+v4l2_mem2mem           24576  1 bcm2835_codec
+vc_sm_cma              36864  1 bcm2835_mmal_vchiq
+videobuf2_common       45056  4 bcm2835_codec,bcm2835_v4l2,v4l2_mem2mem,videobuf2_v4l2
+videobuf2_dma_contig    20480  1 bcm2835_codec
+videobuf2_memops       16384  2 videobuf2_dma_contig,videobuf2_vmalloc
+videobuf2_v4l2         24576  3 bcm2835_codec,bcm2835_v4l2,v4l2_mem2mem
+videobuf2_vmalloc      16384  1 bcm2835_v4l2
+videodev              192512  6 bcm2835_codec,v4l2_common,videobuf2_common,bcm2835_v4l2,v4l2_mem2mem,videobuf2_v4l2
+x_tables               32768  1 ip_tables

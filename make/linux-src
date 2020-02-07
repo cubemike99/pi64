@@ -20,7 +20,7 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bcmrpi_defconfig
 
 # sed -iE 's/\(CONFIG_CRYPTO\)\w+=m/\1=y/' .config
 
-# make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- LSMOD=../../make/raspi_lsmod.txt localmodconfig
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- LSMOD=../../make/raspi0_lsmod.txt localmodconfig
 
 # sed -i 's/ CONFIG_DEBUG_LL .*/CONFIG_DEBUG_LL=y/' .config
 # echo CONFIG_DEBUG_BCM2835=y >> ./.config

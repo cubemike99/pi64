@@ -10,7 +10,7 @@ cd build/linux-src
 
 mkdir -p ../linux/boot ../linux/usr/bin ../linux/opt
 
-cp arch/arm/boot/Image ../linux/boot/kernel7.img
+cp arch/arm/boot/Image ../linux/boot/kernel.img
 cp arch/arm/boot/dts/bcm2708-rpi-zero-w.dtb ../linux/boot
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- INSTALL_MOD_PATH=$(dirname $PWD)/linux modules_install
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- INSTALL_HDR_PATH=$(dirname $PWD)/linux/usr headers_install

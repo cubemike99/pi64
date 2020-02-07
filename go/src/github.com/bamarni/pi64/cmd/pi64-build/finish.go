@@ -26,13 +26,14 @@ rm -rf root-$version/var/lib/apt/lists/* root-$version/etc/apt/sources.list.d/*
 
 rsync -a linux/ root-$version/
 
-# https://github.com/RPi-Distro/repo/issues/51
-mkdir -p root-$version/lib/firmware/brcm
-wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43430-sdio.bin
-wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43430-sdio.clm_blob
+cp ../rootfs/bluetooth.service root-$version/lib/systemd/system/
+cp ../rootfs/rfcomm.service root-$version/lib/systemd/system/
+cp ../rootfs/bcm43438.service root-$version/lib/systemd/system/
+
 wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43430-sdio.txt
 wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/bluez-firmware/raw/master/broadcom/BCM43430A1.hcd
 wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/bluez-firmware/raw/master/broadcom/BCM4345C0.hcd
+
 `)
 	if out, err := script.CombinedOutput(); err != nil {
 		fmt.Fprintln(os.Stderr, string(out))
@@ -40,7 +41,7 @@ wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/bluez-firm
 	}
 
 	fmt.Fprintln(os.Stderr, "   Creating /boot/cmdline.txt...")
-	logLevel := 3
+	logLevel := 8
 	if debug {
 		logLevel = 7
 	}
@@ -50,7 +51,7 @@ wget -P root-$version/lib/firmware/brcm https://github.com/RPi-Distro/bluez-firm
 	}
 
 	fmt.Fprintln(os.Stderr, "   Creating /boot/config.txt...")
-	if err := ioutil.WriteFile(bootDir+"/config.txt", []byte("dtparam=audio=on\n\"kernel=kernel7.img\"\ncpu_freq=1000\nforce_turbo=1\nenable_uart=1\n"), 0644); err != nil {
+	if err := ioutil.WriteFile(bootDir+"/config.txt", []byte("dtparam=audio=on\ncpu_freq=1000\nforce_turbo=1\nenable_uart=1\n"), 0644); err != nil {
 		return err
 	}
 
