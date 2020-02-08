@@ -28,14 +28,14 @@ var (
 		// Packages required by the pi64-update CLI tool
 		"ca-certificates",
 
-      // User packages
-      "vim", "lsof", "pciutils", "usbutils", "lshw", "wget", "ca-certificates", "g++", "make", "bluetooth", "bluez", "git", "strace", "file",
+        // User packages
+        "vim", "lsof", "pciutils", "usbutils", "lshw", "wget", "ca-certificates", "g++", "make", "bluetooth", "bluez", "git", "strace", "file",
 	}
 	litePackages    = []string{"ssh", "avahi-daemon"}
 	desktopPackages = []string{"task-lxde-desktop"}
 	debugPackages   = []string{"device-tree-compiler", "strace", "vim", "less"}
 
-	debianKeyringURL    = "http://deb.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2019.1_all.deb"
+	debianKeyringURL    = "http://archive.raspbian.org/raspbian/pool/main/r/raspbian-archive-keyring/raspbian-archive-keyring_20120528.2_all.deb"
 	debianKeyringSHA256 = "9cefd8917f3d97a999c136aa87f04a3024408b5bc1de470de7d6dfa5e4bd4361"
 )
 
@@ -166,12 +166,14 @@ url="$2"
 sha256="$3"
 
 wget --quiet "$url" -O keyring.deb
-echo "$sha256 *keyring.deb" >SHA256SUMS
-sha256sum -c SHA256SUMS
+# echo "$sha256 *keyring.deb" >SHA256SUMS
+# sha256sum -c SHA256SUMS
 
 dpkg-deb -x keyring.deb "$root_dir"
+mkdir -p $root_dir/etc/apt/trusted.gpg.d/
+cp $root_dir/usr/share/keyrings/raspbian-archive-keyring.gpg $root_dir/etc/apt/trusted.gpg.d/raspbian-archive-keyring.gpg
 
-rm -f keyring.deb SHA256SUMS
+#rm -f keyring.deb SHA256SUMS
 `)
 
 	return script.Run()

@@ -28,7 +28,7 @@ debootstrap=Debian
 aptsources=Debian
 
 [Debian]
-source=http://deb.debian.org/debian/
+source=http://archive.raspbian.org/raspbian
 keyring=
 components=` + strings.Join(options.Components, " ") + `
 suite=` + options.Suite + `
