@@ -10,14 +10,13 @@ if [ -e linux-src ]; then
    git checkout -- .
    cd ..
 else
-   git clone --depth=1 -b rpi-4.19.y https://github.com/raspberrypi/linux.git linux-src
+   git clone --depth=1 -b rpi-5.5.y https://github.com/raspberrypi/linux.git linux-src
 fi
 
 cd linux-src
 
+KERNEL=kernel7
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bcmrpi_defconfig
-
-# sed -iE 's/\(CONFIG_CRYPTO\)\w+=m/\1=y/' .config
 
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- LSMOD=../../make/raspi0_lsmod.txt localmodconfig
 

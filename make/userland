@@ -15,7 +15,7 @@ fi
 
 cd userland
 
-cmake -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_BUILD_TYPE=release -DCMAKE_C_COMPILER=arm-linux-gnueabihf-gcc -DCMAKE_CXX_COMPILER=arm-linux-gnueabihf-g++ -DCMAKE_ASM_COMPILER=arm-linux-gnueabihf-gcc -DCMAKE_C_FLAGS="-march=armv6z -mtune=arm1176jzf-s -mfpu=vfp -mfloat-abi=hard" -DCMAKE_CXX_FLAGS="-march=armv6z -mtune=arm1176jzf-s -mfpu=vfp -mfloat-abi=hard"
+cmake -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_BUILD_TYPE=release -DCMAKE_C_COMPILER=arm-linux-gnueabihf-gcc -DCMAKE_CXX_COMPILER=arm-linux-gnueabihf-g++ -DCMAKE_ASM_COMPILER=arm-linux-gnueabihf-gcc 
 
 make -j $(nproc)
 

@@ -20,7 +20,7 @@ var (
 		"apt", "systemd", "systemd-sysv", "udev", "kmod", "locales", "sudo",
 
 		// Networking packages
-		"netbase", "net-tools", "ethtool", "iproute2", "iputils-ping", "ifupdown", "dhcpcd5", "firmware-brcm80211", "wpasupplicant", "ntp",
+		"netbase", "net-tools", "ethtool", "iproute2", "iputils-ping", "ifupdown", "dhcpcd5", "firmware-brcm80211", "wpasupplicant", 
 
 		// Packages required by the pi64-config CLI tool
 		"dialog", "stress", "wireless-tools", "parted",

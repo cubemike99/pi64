@@ -1,3 +1,4 @@
+Module                  Size  Used by
 8021q                  32768  0
 bcm2835_codec          36864  0
 bcm2835_mmal_vchiq     32768  2 bcm2835_codec,bcm2835_v4l2
@@ -17,7 +18,6 @@ ip_tables              24576  0
 ipv6                  446464  30
 llc                    16384  2 garp,stp
 media                  36864  3 bcm2835_codec,videodev,v4l2_mem2mem
-Module                  Size  Used by
 raspberrypi_hwmon      16384  0
 rfcomm                 53248  7
 rfkill                 28672  6 bluetooth,cfg80211
